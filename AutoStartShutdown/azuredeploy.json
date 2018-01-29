@@ -1,8 +1,73 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": {},
-  "variables": {},
+  "parameters": {
+    "accountName": {
+      "type": "String",
+      "metadata": {
+        "description": "A valid Azure Automation Account Name"
+      }
+    },
+    "regionId": {
+      "type": "String",
+      "defaultvalue": "usgovvirginia",
+      "metadata": {
+        "description": "Region of the Azure Automation Account"
+      }
+    },
+    "pricingTier": {
+      "type": "String",
+      "defaultvalue": "free",
+      "metadata": {
+        "description": "Pricing tier for the Azure Automation account"
+      }
+    }
+  },
+  "variables": {
+    "AzureRM.Profile": {
+      "name": "AzureRm.Profile",
+      "url": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.profile.2.8.0.nupkg"
+    },
+    "psModules": [
+      {
+        "name": "AzureRM.Compute",
+        "url": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.compute.2.9.0.nupkg"
+      },
+      {
+        "name": "AzureRm.Resources",
+        "url": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.resources.3.8.0.nupkg"
+      },
+      {
+        "name": "AzureRm.KeyVault",
+        "url": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.keyvault.2.8.0.nupkg"
+      },
+      {
+        "name": "AzureRm.Automation",
+        "url": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.automation.2.8.0.nupkg"
+      },
+      {
+        "name": "AzureRm.OperationalInsights",
+        "url": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.operationalinsights.2.8.0.nupkg"
+      },
+      {
+        "name": "AzureRm.Insights",
+        "url": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.insights.2.8.0.nupkg"
+      }
+    ],
+    "runbooks": [
+      {
+        "name": "AutoStartShutdown",
+        "version": "1.0.0.0",
+        "description": "Runbook for automatically starting and shutting down VMs based on a tag and schedule",
+        "type": "PowerShell",
+        "Id": "",
+        "scriptUri": "[concat(variables('runbooklocation'),'/scripts/Bootstrap_Main.ps1')]"
+      }
+    ],
+      "runbooklocation":
+      "https://startstopprod.blob.core.windows.net/aro-toolkit-marketplace"
+
+  },
   "resources": [],
   "outputs": {}
 }
