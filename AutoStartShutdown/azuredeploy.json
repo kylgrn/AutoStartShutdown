@@ -21,6 +21,18 @@
       "metadata": {
         "description": "Pricing tier for the Azure Automation account"
       }
+    },
+    "resourceGroup": {
+      "type": "String",
+      "metadata": {
+        "description": "This is the Resource Group that the Automation Account belongs to"
+      }
+    },
+    "subscriptionName": {
+      "type": "String",
+      "metadata": {
+        "description": "This is the name of the subscription that the Automation Account belongs to"
+      }
     }
   },
   "variables": {
@@ -61,13 +73,55 @@
         "description": "Runbook for automatically starting and shutting down VMs based on a tag and schedule",
         "type": "PowerShell",
         "Id": "",
-        "scriptUri": "[concat(variables('runbooklocation'),'/scripts/Bootstrap_Main.ps1')]"
+        "scriptUri": "[concat(variables('runbooklocation'),'/AutoStartShutdown.ps1')]"
       }
     ],
-      "runbooklocation":
-      "https://startstopprod.blob.core.windows.net/aro-toolkit-marketplace"
-
+    "automationVariables": [
+      {
+        "name": "StartShutdown_AutomationAcct",
+        "description": "Azure Automation Account Name",
+        "value": "[concat('\"',parameters('accountName'),'\"')]"
+      },
+      {
+        "name": "StartShutdown_ResourceGroup",
+        "description": "Azure Resource Group the Automation Account belongs to",
+        "value": "[concat('\"',parameters('resourceGroup'),'\"')]"
+      },
+      {
+        "name": "StartShutdown_SubscriptionName",
+        "description": "Azure Subscription Name the Automation Account belongs to",
+        "value": "[concat('\"',parameters('subscriptionName'),'\"')]"
+      },
+      {
+        "name": "StartShutdown_TagName",
+        "description": "Azure Tag Name for VMs and Resource Groups",
+        "value": "AutoStartShutdown"
+      },
+      {
+        "name": "StartShutdown_TagValue",
+        "description": "Azure Tag Name for VMs and Resource Groups",
+        "value": "True"
+      }
+    ],
+    "runbooklocation": "https://github.com/kylgrn/AutoStartShutdown/blob/master/AutoStartShutdown/AutoStartShutdown/AutoStartShutdown",
+    "StartStopVMVersion": "1.0.0.0"
   },
-  "resources": [],
+  "resources": [
+    {
+      "type": "Microsoft.Automation/automationAccounts",
+      "name": "[parameters('accountName')]",
+      "apiVersion": "2015-10-31",
+      "location": "[parameters('regionId')]",
+      "tags": {
+        "StartStopVMVersion": "[variables('StartStopVMVersion')]"
+      },
+      "properties": {
+        "sku": {
+          "name": "OMS"
+        }
+      }
+    }
+
+  ],
   "outputs": {}
 }
