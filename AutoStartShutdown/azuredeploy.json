@@ -46,7 +46,7 @@
     },
     "startRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "c0937665-4498-4e3c-93c8-95c0b90c493c",
+      "defaultValue": "764a62c8-e954-428f-bb2e-e2f5f10239dc",
       "metadata": {
         "description": "Enter a unique GUID to enable the start schedule.",
         "control": "guid",
@@ -64,7 +64,7 @@
     },
     "stopRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "cb061b60-9a72-45fc-8b72-4d4d8f5d92db",
+      "defaultValue": "04bed709-e4d5-478d-bd58-ffcc361ea603",
       "metadata": {
         "description": "Enter a unique GUID to enable the stop schedule",
         "control": "guid",
@@ -185,7 +185,7 @@
           "uri": "[variables('scriptUri')]",
           "version": "1.0.0.0"
         },
-        "runbookType": "Script"
+        "runbookType": "PowerShell"
       }
     },
     {
