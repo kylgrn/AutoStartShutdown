@@ -140,7 +140,7 @@
     "AutomationVariable_TagNameDescription": "Azure Subscription Name the Automation Account belongs to",
     "AutomationVariable_TagValue": "StartShutdown_TagValue",
     "AutomationVariable_TagValueDescription": "Azure Tag Name for VMs and Resource Groups",
-    "AutomationTagNameValue": "AutoStartShudown",
+    "AutomationTagNameValue": "AutoStartShutdown",
     "AutomationTagValue":  "True",
     "StartStopVMVersion": "1.0.0.0",
     "sku": "Free",
