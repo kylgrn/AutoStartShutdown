@@ -46,7 +46,7 @@
     },
     "startRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "c83385fc-462b-4364-810c-33d2e9c44b05",
+      "defaultValue": "c0937665-4498-4e3c-93c8-95c0b90c493c",
       "metadata": {
         "description": "Enter a unique GUID to enable the start schedule.",
         "control": "guid",
@@ -64,7 +64,7 @@
     },
     "stopRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "4423938d-54cf-4fda-9c66-4f184d8fe59c",
+      "defaultValue": "cb061b60-9a72-45fc-8b72-4d4d8f5d92db",
       "metadata": {
         "description": "Enter a unique GUID to enable the stop schedule",
         "control": "guid",
@@ -140,8 +140,8 @@
     "AutomationVariable_TagNameDescription": "Azure Subscription Name the Automation Account belongs to",
     "AutomationVariable_TagValue": "StartShutdown_TagValue",
     "AutomationVariable_TagValueDescription": "Azure Tag Name for VMs and Resource Groups",
-    "AutomationTagValue":  "True"
-
+    "AutomationTagNameValue": "AutoStartShudown",
+    "AutomationTagValue":  "True",
     "StartStopVMVersion": "1.0.0.0",
     "sku": "Free",
     "runbookname": "AutoStartShutdownVMs",
@@ -234,7 +234,7 @@
       "tags": {},
       "properties": {
         "description": "[variables('AutomationVariable_TagNameDescription')]",
-        "value": "[concat('\"',variables('AutomationVariable_TagValue'),'\"')]"
+        "value": "[concat('\"',variables('AutomationTagNameValue'),'\"')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Automation/automationAccounts/',  parameters('accountName'))]"
