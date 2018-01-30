@@ -46,7 +46,7 @@
     },
     "startRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "721260a5-99b1-47e3-bdd8-7ac5f4023046",
+      "defaultValue": "0dc7a4c4-f054-4641-b6c5-1c292bf2cb13",
       "metadata": {
         "description": "Enter a unique GUID to enable the start schedule.",
         "control": "guid",
@@ -55,7 +55,7 @@
     },
     "Daily Stop Time": {
       "type": "String",
-      "defaultValue": "5:00:00 PM",
+      "defaultValue": "2018-01-31T05:00:00-08:00",
       "metadata": {
         "description": "Enter time for stopping VMs by resource group.  This is a recurring daily schedule. Set a datetime (current time zone) that is at least 30 minutes from now.  Schedule will be reflected as UTC in the automation account.",
         "control": "datetime",
@@ -64,7 +64,7 @@
     },
     "stopRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "51630963-51b4-42ef-b869-755152c69951",
+      "defaultValue": "94b84b48-2ee9-43c1-b52e-70c0703c7900",
       "metadata": {
         "description": "Enter a unique GUID to enable the stop schedule",
         "control": "guid",
@@ -138,8 +138,9 @@
     "AutomationVariable_SubscriptionDescription": "Azure Subscription Name the Automation Account belongs to",
     "AutomationVariable_TagName": "StartShutdown_TagName",
     "AutomationVariable_TagNameDescription": "Azure Subscription Name the Automation Account belongs to",
-    "AutomationVariable_TagValue": "StartShutdown_TagValue",
+    "AutomationVariable_TagValue": "AutoStartShutdown",
     "AutomationVariable_TagValueDescription": "Azure Tag Name for VMs and Resource Groups",
+
     "StartStopVMVersion": "1.0.0.0",
     "sku": "Free",
     "runbookname": "AutoStartShutdownVMs",
@@ -200,6 +201,45 @@
       ]
     },
     {
+      "type": "Microsoft.Automation/automationAccounts/variables",
+      "name": "[concat(parameters('accountName'), '/', variables('AutomationVariable_ResourceGroupName'))]",
+      "apiVersion": "2015-10-31",
+      "tags": {},
+      "properties": {
+        "description": "[variables('AutomationVariable_ResourceGroupDescription')]",
+        "value": "[concat('\"',parameters('resourceGroup'),'\"')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Automation/automationAccounts/',  parameters('accountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Automation/automationAccounts/variables",
+      "name": "[concat(parameters('accountName'), '/', variables('AutomationVariable_SubscriptionName'))]",
+      "apiVersion": "2015-10-31",
+      "tags": {},
+      "properties": {
+        "description": "[variables('AutomationVariable_SubscriptionDescription')]",
+        "value": "[concat('\"',parameters('subscriptionName'),'\"')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Automation/automationAccounts/',  parameters('accountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Automation/automationAccounts/variables",
+      "name": "[concat(parameters('accountName'), '/', variables('AutomationVariable_TagName'))]",
+      "apiVersion": "2015-10-31",
+      "tags": {},
+      "properties": {
+        "description": "[variables('AutomationVariable_TagNameDescription')]",
+        "value": "[concat('\"',variables('AutomationVariable_TagValue'),'\"')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Automation/automationAccounts/',  parameters('accountName'))]"
+      ]
+    },
+    {
       "type": "microsoft.automation/automationAccounts/schedules",
       "name": "[concat(parameters('accountname'), '/', 'Scheduled-StartVM')]",
       "apiVersion": "2015-10-31",
@@ -230,7 +270,8 @@
         "parameters": {
           "Simulate": "false",
           "DesiredState": "Start"
-        }
+        },
+        "isenabled": "false"
       },
       "dependsOn": [
         "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'), '/runbooks/AutoStartShutdownVMs')]",
@@ -268,7 +309,8 @@
         "parameters": {
           "Simulate": "false",
           "DesiredState": "Shutdown"
-        }
+        },
+        "isenabled": "false"
       },
       "dependsOn": [
         "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'), '/runbooks/', variables('runbookname'))]",
