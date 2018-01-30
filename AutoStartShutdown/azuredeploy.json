@@ -46,7 +46,7 @@
     },
     "startRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "0dc7a4c4-f054-4641-b6c5-1c292bf2cb13",
+      "defaultValue": "c83385fc-462b-4364-810c-33d2e9c44b05",
       "metadata": {
         "description": "Enter a unique GUID to enable the start schedule.",
         "control": "guid",
@@ -64,7 +64,7 @@
     },
     "stopRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "94b84b48-2ee9-43c1-b52e-70c0703c7900",
+      "defaultValue": "4423938d-54cf-4fda-9c66-4f184d8fe59c",
       "metadata": {
         "description": "Enter a unique GUID to enable the stop schedule",
         "control": "guid",
@@ -138,14 +138,15 @@
     "AutomationVariable_SubscriptionDescription": "Azure Subscription Name the Automation Account belongs to",
     "AutomationVariable_TagName": "StartShutdown_TagName",
     "AutomationVariable_TagNameDescription": "Azure Subscription Name the Automation Account belongs to",
-    "AutomationVariable_TagValue": "AutoStartShutdown",
+    "AutomationVariable_TagValue": "StartShutdown_TagValue",
     "AutomationVariable_TagValueDescription": "Azure Tag Name for VMs and Resource Groups",
+    "AutomationTagValue":  "True"
 
     "StartStopVMVersion": "1.0.0.0",
     "sku": "Free",
     "runbookname": "AutoStartShutdownVMs",
     "RunbookDescription": "Automatically starts up and shuts down Azure Resource Manager VMs based on the presence of the AutoStartShutdown tag",
-    "scriptUri": "https://raw.githubusercontent.com/kylgrn/AutoStartShutdown/master/AutoStartShutdown/AutoStartShutdown.ps1",
+    "scriptUri": "https://raw.githubusercontent.com/kylgrn/AutoStartShutdown/master/AutoStartShutdown.ps1",
     "StartRunbookScheduleInterval": 1,
     "StartRunbookScheduleFrequency": "Day",
     "StopRunbookScheduleInterval": 1,
@@ -234,6 +235,19 @@
       "properties": {
         "description": "[variables('AutomationVariable_TagNameDescription')]",
         "value": "[concat('\"',variables('AutomationVariable_TagValue'),'\"')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Automation/automationAccounts/',  parameters('accountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Automation/automationAccounts/variables",
+      "name": "[concat(parameters('accountName'), '/', variables('AutomationVariable_TagValue'))]",
+      "apiVersion": "2015-10-31",
+      "tags": {},
+      "properties": {
+        "description": "[variables('AutomationVariable_TagValueDescription')]",
+        "value": "[concat('\"',variables('AutomationTagValue'),'\"')]"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Automation/automationAccounts/',  parameters('accountName'))]"
