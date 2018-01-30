@@ -46,7 +46,7 @@
     },
     "startRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "764a62c8-e954-428f-bb2e-e2f5f10239dc",
+      "defaultValue": "bc7267ac-3c6d-40c0-bf71-0a97314faaa1",
       "metadata": {
         "description": "Enter a unique GUID to enable the start schedule.",
         "control": "guid",
@@ -64,7 +64,7 @@
     },
     "stopRunbookScheduleJobGuidValue": {
       "type": "String",
-      "defaultValue": "04bed709-e4d5-478d-bd58-ffcc361ea603",
+      "defaultValue": "743e3b0b-7bcd-47af-bbad-4cf67d17647e",
       "metadata": {
         "description": "Enter a unique GUID to enable the stop schedule",
         "control": "guid",
