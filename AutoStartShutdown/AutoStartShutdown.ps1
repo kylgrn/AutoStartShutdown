@@ -105,7 +105,7 @@ function AssertResourceManagerVirtualMachinePowerState
 function AssertRGActionbyTag
 {
 $vm =@()
-$taggedResourceGroups = Find-AzureRmResourceGroup -Tag @{$TagName = $TagValue}
+$taggedResourceGroups = Get-AzureRmResourceGroup -Tag @{$TagName = $TagValue}
 $taggedResourceGroupNames = @($taggedResourceGroups | select -ExpandProperty name)
 Write-Output "Found [$($taggedResourceGroupnames.Count)] schedule-tagged resource groups in subscription"	
 $vms = foreach ($rgvm in $taggedresourcegroups) {Get-azureRMVM -ResourceGroupName $rgvm.name}
@@ -118,7 +118,7 @@ AssertResourceManagerVirtualMachinePowerState
 #Start/Shutdown individual VMs with the defined tag
 function AssertVmActionByTag
     {
-    $vms = Find-AzureRmResource -TagName $TagName -TagValue $TagValue | where {$_.ResourceType -like "Microsoft.Compute/virtualMachines"} 
+    $vms = Get-AzureRmResource -TagName $TagName -TagValue $TagValue | where {$_.ResourceType -like "Microsoft.Compute/virtualMachines"} 
     Foreach ($vm in $vms){
 AssertResourceManagerVirtualMachinePowerState
         }
